@@ -80,7 +80,7 @@ def saddle(a):
         i = a[x].index(minimum)
         maximum = max(b[i])
         if(maximum == minimum):
-            return((x+1,i+1))
+            return(((x+1,i+1), minimum))
         
     return "does not exist"
 
