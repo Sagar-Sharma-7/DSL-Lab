@@ -40,7 +40,7 @@ def transpose(a):
     return result
     
 
-def sum(a, b):
+def sum_matrix(a, b):
     result = []
     for x in range(len(a)):
         row = []
@@ -73,17 +73,64 @@ def multiply(a,b):
     return result
 
 def saddle(a):
-    b = transpose(a)
+    saddle_points = []
+    rows = len(a)
+    cols = len(a[0])
+    for i in range(rows):
+        row_min = a[i][0]
+        min_col_i = [0]
+        for j in range(1, cols):
+            if a[i][j] < row_min:
+                min_col_i = [j]
+            elif a[i][j] == row_min:
+                min_col_i.append(j)
+        for col_i in min_col_i:
+            is_saddle = True
+            for k in range(rows):
+                if a[k][col_i] > row_min:
+                    is_saddle = False
+                    break
+            if is_saddle:
+                saddle_points.append((i + 1, col_i + 1))
 
-    for x in range(len(a)):
-        minimum = min(a[x])
-        i = a[x].index(minimum)
-        maximum = max(b[i])
-        if(maximum == minimum):
-            return(((x+1,i+1), minimum))
+    return saddle_points
+    # b = transpose(a)
+
+    # for x in range(len(a)):
+    #     minimum = min(a[x])
+    #     i = a[x].index(minimum)
+    #     maximum = max(b[i])
+    #     if(maximum == minimum):
+    #         return(((x+1,i+1), minimum))
         
-    return "does not exist"
+    # return "does not exist"
 
+def magicSq(a):
+    n = len(a)
+    common_sum = sum(a[0])
+    for row in a:
+        if sum(row) != common_sum:
+            return False
+        
+    for col in range(n):
+        col_sum = 0
+        for row in range(n):
+            col_sum += a[row][col]
+        if col_sum != common_sum:
+            return False
+    
+    first_diagonal_sum = 0
+    for i in range(n):
+        first_diagonal_sum += a[i][i]
+    if first_diagonal_sum != common_sum:
+        return False
+    second_diagonal_sum = 0
+    for i in range(n):
+        second_diagonal_sum += a[i][n - i - 1]
+    if second_diagonal_sum != common_sum:
+        return False
+    
+    return True
 
 print("\tSelect any of the following operation: ")
 print("1: Check for upper triangular")
@@ -93,6 +140,7 @@ print("4: Sum of 2 matrix")
 print("5: Subtract 2 matrix")
 print("6: Multiply 2 matrix")
 print("7: Find saddle point")
+print("8: Check for magic square")
 
 cmd = int(input("Enter operation number: "))
 
@@ -103,13 +151,18 @@ elif(cmd == 2):
 elif(cmd == 3):
     print(transpose(getMatrix()))
 elif(cmd == 4):
-    print(sum(getMatrix(), getMatrix()))
+    print(sum_matrix(getMatrix(), getMatrix()))
 elif(cmd == 5):
     print(subtract(getMatrix(), getMatrix()))
 elif(cmd == 6):
     print(multiply(getMatrix(), getMatrix()))
 elif(cmd == 7):
     print(saddle(getMatrix()))
+elif(cmd == 8):
+    print(magicSq(getMatrix()))
+else:
+    print("invalid!")
+
 
 
 

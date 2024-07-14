@@ -49,6 +49,7 @@ for x in range(0, n):
     mark = int(input("Enter marks of roll no %d: "%(x+1)))
     marks_list.append(mark)
 
+print(" ")
 avg(marks_list, n)
 high_low(marks_list)
 absent(marks_list)
