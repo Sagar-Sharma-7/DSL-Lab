@@ -22,7 +22,7 @@ def binarySearch(l, k):
         if(l[mid] == k):
             count+=1
             print("total comparision %d"%count)
-            return ("found at %s"%i)
+            return ("found at %s"%mid)
         elif(l[mid] < k):
             count+=1
             s = mid + 1
@@ -34,10 +34,11 @@ def binarySearch(l, k):
     return("not found!")
 
 
-n = int(input("Enter number elements in list (in order): "))
-l = list();
-for i in range(n):
-    l.append(int(input("Enter element %d: "%i)))
+# n = int(input("Enter number elements in list (in order): "))
+# l = list();
+# for i in range(n):
+#     l.append(int(input("Enter element %d: "%i)))
+l = eval(input("Enter your ordered list: "))
 k = int(input("Element to search: "))
 
 print()
