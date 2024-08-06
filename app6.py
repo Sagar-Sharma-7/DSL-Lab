@@ -15,6 +15,14 @@ def bubbleSort(l):
     print(count)
     return l
 
+def selectionSort(l):
+    for i in range(len(l)):
+        min = l[i]
+        for j in range(i+1, len(l)):
+            if(l[j] < l[i]):
+                min = l[j]
+        
+
 l = eval(input("Enter your unsorted list: "))
 print("Sorted list:")
 starttime1 = datetime.now()
