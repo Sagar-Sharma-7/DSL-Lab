@@ -26,6 +26,7 @@ def selectionSort(l):
     return l;
 
 l = eval(input("Enter your unsorted list: "))
+l2 = l.copy();
 print("Sorted list:")
 starttime1 = datetime.now()
 print(bubbleSort(l))
@@ -35,7 +36,7 @@ print((endtime1.timestamp() * 1000 - starttime1.timestamp() * 1000), " ms")
 
 print()
 starttime2 = datetime.now()
-print(selectionSort(l))
+print(selectionSort(l2))
 endtime2 = datetime.now()
 print("\nTime taken:")
 print((endtime2.timestamp() * 1000 - starttime2.timestamp() * 1000), " ms")
