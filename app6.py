@@ -17,11 +17,13 @@ def bubbleSort(l):
 
 def selectionSort(l):
     for i in range(len(l)):
-        min = l[i]
+        min = i
         for j in range(i+1, len(l)):
             if(l[j] < l[i]):
-                min = l[j]
-        
+                min = j
+        l[i], l[min] = l[min], l[i]
+
+    return l;
 
 l = eval(input("Enter your unsorted list: "))
 print("Sorted list:")
@@ -30,3 +32,10 @@ print(bubbleSort(l))
 endtime1 = datetime.now()
 print("\nTime taken:")
 print((endtime1.timestamp() * 1000 - starttime1.timestamp() * 1000), " ms")
+
+print()
+starttime2 = datetime.now()
+print(selectionSort(l))
+endtime2 = datetime.now()
+print("\nTime taken:")
+print((endtime2.timestamp() * 1000 - starttime2.timestamp() * 1000), " ms")
