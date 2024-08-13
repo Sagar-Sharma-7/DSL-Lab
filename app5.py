@@ -33,6 +33,57 @@ def binarySearch(l, k):
     print("total comparision %d"%count)
     return("not found!")
 
+def sentinel_search(arr, target):
+    n = len(arr)
+    last = arr[n - 1]
+    arr[n - 1] = target
+
+    i = 0
+    while arr[i] != target:
+        i += 1
+
+    arr[n - 1] = last
+
+    if i < n - 1 or arr[n - 1] == target:
+        return True
+    else:
+        return False
+
+def fibonacci_search(arr, target):
+    n = len(arr)
+    
+    m2 = 0
+    m1 = 1
+    m0 = m2 + m1
+    
+    while m0 < n:
+        m2 = m1
+        m1 = m0
+        m0 = m1 + m2
+    
+    offset = 0
+    
+    while m0 > 1:
+        i = min(offset + m2, n - 1)
+        
+        if arr[i] < target:
+            m0 = m1
+            m1 = m2
+            m2 = m0 - m1
+            offset = i
+        
+        elif arr[i] > target:
+            m0 = m2
+            m1 = m1 - m2
+            m2 = m0 - m1
+        
+        else:
+            return True
+    
+    if m1 and offset < n - 1 and arr[offset + 1] == target:
+        return True
+    
+    return False
 
 # n = int(input("Enter number elements in list (in order): "))
 # l = list();
@@ -55,4 +106,16 @@ starttime2 = datetime.now()
 print(binarySearch(l, k))
 endtime2 = datetime.now()
 print((endtime2.timestamp() * 1000 - starttime2.timestamp() * 1000), " ms")
+
+print()
+starttime3 = datetime.now()
+print(sentinel_search(l, k))
+endtime3 = datetime.now()
+print((endtime3.timestamp() * 1000 - starttime3.timestamp() * 1000), " ms")
+
+print()
+starttime4 = datetime.now()
+print(sentinel_search(l, k))
+endtime4 = datetime.now()
+print((endtime4.timestamp() * 1000 - starttime4.timestamp() * 1000), " ms")
 
