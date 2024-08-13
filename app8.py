@@ -57,14 +57,62 @@ def getMatrix():
 
     return [[m,n,count]] + matrix;
 
-print("Input matrix1")
-m1 = getMatrix()
-print(m1)
+def simpleTrans(mat):
+    row = mat[0][1]
+    col = mat[0][0]
+    non_zero = mat[0][2]
+    transMat = [[row, col, non_zero]]
+    for i in range(0,mat[0][1]):
+        for j in range(1,mat[0][2]+1):
+            if mat[j][1]==i:
+                transMat.append([mat[j][1],mat[j][0],mat[j][2]])
+    return transMat
 
-print("Input matrix2")
-m2 = getMatrix()
-print(m2)
+def fastTranspose(mat1):
+    mat2 = [[mat1[0][1],mat1[0][0],mat1[0][2]]] + [0]* mat1[0][2]
+    print(mat2)
+    freq = [0] * (mat1[0][1]+1)
+    for i in mat1[1:]:
+        freq[(i[1])+1] += 1
+    print(freq)
+    freq[0]=1
+    for i in range(1,len(freq)-1):
+        freq[i] = freq[i-1]+freq[i]
+    print (freq)
+    print()
 
-addSparse(m1, m2)
+    
+    for i in mat1[1:]:
+        mat2[freq[i[1]]] = [i[1],i[0],i[2]]
+        freq[i[1]]+=1
+    for i in mat2:
+        print(i)
+
+
+while True:
+    print("Menu:")
+    print("1: Addition")
+    print("2: Transpose")
+    print("3: Exit")
+    choice = input("Enter your choice (1, 2, or 3): ")
+    if choice == '1':
+        print("Input matrix1")
+        m1 = getMatrix()
+        print(m1)
+        
+        print("Input matrix2")
+        m2 = getMatrix()
+        print(m2)
+        addSparse(m1, m2)
+    elif choice == '2':
+        print("Input Matrix")
+        m = getMatrix()
+        print("Sparse matrix is: ")
+        print(m)
+        print(m)
+        print("Simple Transpose is: ")
+        fastTranspose(m)
+    else:
+        break
 
 
