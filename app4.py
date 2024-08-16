@@ -50,6 +50,8 @@ def sentinel_search(arr, target):
         return False
 
 def fibonacci_search(arr, target):
+    count = 0
+    
     n = len(arr)
     
     m2 = 0
@@ -64,6 +66,7 @@ def fibonacci_search(arr, target):
     offset = 0
     
     while m0 > 1:
+        count+=1
         i = min(offset + m2, n - 1)
         
         if arr[i] < target:
@@ -78,8 +81,10 @@ def fibonacci_search(arr, target):
             m2 = m0 - m1
         
         else:
+            print("Total comparison: ", count)
             return True
-    
+        
+    print("Total comparison: ", count)
     if m1 and offset < n - 1 and arr[offset + 1] == target:
         return True
     
@@ -108,14 +113,15 @@ endtime2 = datetime.now()
 print((endtime2.timestamp() * 1000 - starttime2.timestamp() * 1000), " ms")
 
 print()
+print('\033[94m' + "\tSenital Search: " + '\033[0m')
 starttime3 = datetime.now()
 print(sentinel_search(l, k))
 endtime3 = datetime.now()
 print((endtime3.timestamp() * 1000 - starttime3.timestamp() * 1000), " ms")
 
 print()
+print('\033[94m' + "\tFibonacci Search: " + '\033[0m')
 starttime4 = datetime.now()
-print(sentinel_search(l, k))
+print(fibonacci_search(l, k))
 endtime4 = datetime.now()
 print((endtime4.timestamp() * 1000 - starttime4.timestamp() * 1000), " ms")
-
