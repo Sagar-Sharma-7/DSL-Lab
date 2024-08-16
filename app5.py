@@ -6,23 +6,30 @@ def bubbleSort(l):
     count = 0
     for x in range(len(l)):
         for i in range(0, len(l) - x - 1):
-            count+=1
             if l[i] > l[i+1]:
+                count+=1
                 l[i], l[i+1] = l[i+1], l[i]
                 swapped = True
+                print(l)
         if not swapped:
             break
-    print(count)
+    print("Total Comparisons: ", count)
     return l
 
 def selectionSort(l):
+    count1 = 0
     for i in range(len(l)):
-        min = i
+        min_index = i
         for j in range(i+1, len(l)):
-            if(l[j] < l[i]):
-                min = j
-        l[i], l[min] = l[min], l[i]
-
+            if(l[j] < l[min_index]):
+                count1 += 1
+                min_index = j
+        if min_index != i:
+            l[i], l[min_index] = l[min_index], l[i]
+            print(l)
+    
+    print()
+    print("Total comparisons: ", count1)
     return l;
 
 l = eval(input("Enter your unsorted list: "))
