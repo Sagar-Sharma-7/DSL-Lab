@@ -110,14 +110,100 @@ void displayMenu(){
     cout << "Menu:\n";
     cout << "1. Create New Division\n";
     cout << "2. Add Member\n";
-    cout << "3. Change President\n";
-    cout << "4. Change Secretary\n";
+    cout << "3. Add President\n";
+    cout << "4. ADD Secretary\n";
     cout << "5. Display Members\n";
     cout << "6. Exit\n";
     cout << "Choose an option: ";
 };
 
 int main(){
+    map<int, Club> divisions;
+    int choice, divisionID;
+    string name;
+    int prn;
+
+    do{
+        displayMenu();
+        cin >> choice;
+        cout << "\n\n";
+        switch(choice){
+            case 1: 
+                cout << "Enter new Division ID: " << endl;
+                cin >> divisionID;
+                if(divisions.find(divisionID) == divisions.end()){
+                    divisions[divisionID] = Club();
+                    cout << "New division " << divisionID << " created.\n";
+                }else {
+                    cout << "DivisionID already exists.\n";
+                }
+                cout << "\n\n";
+                break;
+            
+            case 2:
+                cout << "Enter division ID: ";
+                cin >> divisionID;
+                if (divisions.find(divisionID) != divisions.end()) {
+                    cout << "Enter name: ";
+                    cin >> name;
+                    cout << "Enter PRN: ";
+                    cin >> prn;
+                    divisions[divisionID].addMember(name, prn);
+                } else {
+                    cout << "Division ID does not exist.\n";
+                }
+                cout << "\n\n";
+                break;
+
+            case 3:
+                cout << "Enter division ID: ";
+                cin >> divisionID;
+                if (divisions.find(divisionID) != divisions.end()) {
+                    cout << "Enter new president's name: ";
+                    cin >> name;
+                    cout << "Enter new president's PRN: ";
+                    cin >> prn;
+                    divisions[divisionID].addPresident(name, prn);
+                } else {
+                    cout << "Division ID does not exist.\n";
+                }
+                cout << "\n\n";
+                break;
+
+            case 4:
+                cout << "Enter division ID: ";
+                cin >> divisionID;
+                if (divisions.find(divisionID) != divisions.end()) {
+                    cout << "Enter new secretary's name: ";
+                    cin >> name;
+                    cout << "Enter new secreatary's PRN: ";
+                    cin >> prn;
+                    divisions[divisionID].addSecretary(name, prn);
+                } else {
+                    cout << "Division ID does not exist.\n";
+                }
+                cout << "\n\n";
+                break;
+            case 5:
+                cout << "Enter division ID: ";
+                cin >> divisionID;
+                if (divisions.find(divisionID) != divisions.end()) {
+                    cout << "Division " << divisionID << " members: " << endl;
+                    divisions[divisionID].displayMembers();
+                    cout << "Total club members of Division " << divisionID << ": " << divisions[divisionID].getTotalMember() << endl;
+                } else {
+                    cout << "Division ID does not exist.\n";
+                }
+                cout << "\n\n";
+                break;
+
+            case 6:
+                cout << "Exiting..." << endl;
+                break;
+            default:
+                cout << "Invalid choice! Please try again." << endl;
+        }
+    } while (choice != 6);
 
 
     // Club d1;
