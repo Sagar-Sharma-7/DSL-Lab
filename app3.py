@@ -57,18 +57,35 @@ def subtract(a, b):
         result.append(row)
     return result
 
-def multiply(a,b):
-    result = []
-    for i in range(len(a)):
-        l = []
-        for x in range(len(b[0])):
-            l.append(0)
-        result.append(l)
+def multiply(matrix1,matrix2):
+   # Get the number of rows and columns for both matrices
+    rows_matrix1 = len(matrix1)
+    cols_matrix1 = len(matrix1[0])
+    rows_matrix2 = len(matrix2)
+    cols_matrix2 = len(matrix2[0])
 
-    for x in range(len(a)):
-        for y in range(len(b[0])):
-            for z in range(len(a[0])):
-                result[x][y] += a[x][z] * b[z][y]
+    # Check if the matrices can be multiplied
+    if cols_matrix1 != rows_matrix2:
+        return "Matrices cannot be multiplied"
+
+    # Create an empty result matrix with the correct size
+    result = []
+    
+    # Loop through rows of matrix1
+    for i in range(rows_matrix1):
+        new_row = []
+        # Loop through columns of matrix2
+        for j in range(cols_matrix2):
+            # Initialize the sum to calculate the dot product
+            total = 0
+            # Loop through the elements in the row of matrix1 and column of matrix2
+            for k in range(cols_matrix1):
+                total += matrix1[i][k] * matrix2[k][j]
+            # Add the calculated total to the new row
+            new_row.append(total)
+        # Append the new row to the result matrix
+        result.append(new_row)
+
     return result
 
 def saddle(a):
