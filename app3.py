@@ -25,19 +25,18 @@ def diagonal(a):
     return sum
 
 def transpose(a):
-    result = []
-    row = len(a[0])
-    for i in range(row):
-        x = len(a)
-        l = list()
-        while(x > 0):
-            l.append(0)
-            x -= 1
-        result.append(l)
-    for x in range(len(a[0])):
-        for y in range(len(a)):
-            result[x][y] = a[y][x]
-    return result
+    transposed = []
+    # Loop through columns of the original matrix
+    for i in range(len(matrix[0])):
+        # Create a new row for the transposed matrix
+        new_row = []
+        # Loop through rows of the original matrix
+        for j in range(len(matrix)):
+            # Append the element from the original matrix to the new row
+            new_row.append(matrix[j][i])
+        # Add the new row to the transposed matrix
+        transposed.append(new_row)
+    return transposed
     
 
 def sum_matrix(a, b):
