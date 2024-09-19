@@ -89,25 +89,25 @@ def multiply(matrix1,matrix2):
     return result
 
 def saddle(a):
-    saddle_points = []
+   saddle_points = []
     rows = len(a)
     cols = len(a[0])
+    
     for i in range(rows):
-        row_min = a[i][0]
-        min_col_i = [0]
-        for j in range(1, cols):
-            if a[i][j] < row_min:
-                min_col_i = [j]
-            elif a[i][j] == row_min:
-                min_col_i.append(j)
-        for col_i in min_col_i:
+        # Find the minimum value in the row
+        row_min = min(a[i])
+        # Find all column indices where this minimum occurs
+        min_col_indices = [j for j in range(cols) if a[i][j] == row_min]
+
+        # Check if the row minimum is the largest in its column
+        for col_i in min_col_indices:
             is_saddle = True
             for k in range(rows):
                 if a[k][col_i] > row_min:
                     is_saddle = False
                     break
             if is_saddle:
-                saddle_points.append((i + 1, col_i + 1))
+                saddle_points.append((i + 1, col_i + 1))  # 1-based index
 
     return saddle_points
     # b = transpose(a)
