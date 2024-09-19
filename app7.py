@@ -58,14 +58,27 @@ def getMatrix():
     return [[m,n,count]] + matrix;
 
 def simpleTrans(mat):
-    row = mat[0][1]
-    col = mat[0][0]
-    non_zero = mat[0][2]
+    row = mat[0][1]  # Number of columns in the original matrix
+    col = mat[0][0]  # Number of rows in the original matrix
+    non_zero = mat[0][2]  # Number of non-zero elements
+
+    # Initialize the transposed matrix with swapped dimensions
     transMat = [[row, col, non_zero]]
-    for i in range(0,mat[0][1]):
-        for j in range(1,mat[0][2]+1):
-            if mat[j][1]==i:
-                transMat.append([mat[j][1],mat[j][0],mat[j][2]])
+
+    # Prepare a list to hold transposed elements
+    trans_elements = []
+
+    # Transpose each non-zero element
+    for i in range(1, non_zero + 1):
+        r, c, v = mat[i]
+        trans_elements.append([c, r, v])
+
+    # Sort the transposed elements by row and column indices
+    trans_elements.sort()
+
+    # Append sorted transposed elements to the result matrix
+    transMat.extend(trans_elements)
+
     return transMat
 
 def fastTranspose(mat1):
