@@ -9,228 +9,257 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Node{
+class Node {
     string name;
     int PRN;
     Node* next;
-    public:
-        Node(string name, int prn){
-            this->name = name;
-            this->PRN = prn;
-            this->next = nullptr;
-        };
+public:
+    Node(string name, int prn) {
+        this->name = name;
+        this->PRN = prn;
+        this->next = nullptr;
+    }
 
-        int getPRN(){
-            return PRN;
-        }
+    int getPRN() {
+        return PRN;
+    }
 
-        int setPRN(int prn){
-            PRN = prn;
-        }
+    void setPRN(int prn) {
+        PRN = prn;
+    }
 
-        string getName(){
-            return name;
-        }
+    string getName() {
+        return name;
+    }
 
-        string setName(string name){
-            this->name = name;
-        }
+    void setName(string name) {
+        this->name = name;
+    }
 
-        Node* getNext(){
-            return next;
-        }
+    Node* getNext() {
+        return next;
+    }
 
-        Node* setNext(Node* nextNode){
-            next = nextNode;
-        }
+    void setNext(Node* nextNode) {
+        next = nextNode;
+    }
 };
 
-class Club{
-    private:
-        Node* head;
-        Node* tail;
-        int count;
-    public:
-        Club(){
-            head = nullptr;
-            tail = nullptr;
-            count = 0;
-        };
+class Club {
+private:
+    Node* head;
+    Node* tail;
+    int count;
+public:
+    Club() {
+        head = nullptr;
+        tail = nullptr;
+        count = 0;
+    }
 
-        void addMember(string name, int prn){
-            Node* newNode = new Node(name, prn);
-            if(head == nullptr){
-                head = newNode;
-                tail = newNode;
-            }else{
-                tail->setNext(newNode);
-                tail = newNode;
-            }
-            count++;
+    // Function to add a new member
+    void addMember(string name, int prn) {
+        Node* newNode = new Node(name, prn);
+        if (head == nullptr) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail->setNext(newNode);
+            tail = newNode;
+        }
+        count++;
+    }
+
+    // Function to add the president
+    void addPresident(string name, int prn) {
+        Node* newNode = new Node(name, prn);
+        if (head == nullptr) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            newNode->setNext(head);
+            head = newNode;
+        }
+        count++;
+    }
+
+    // Function to add the secretary
+    void addSecretary(string name, int prn) {
+        Node* newNode = new Node(name, prn);
+        if (head == nullptr) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail->setNext(newNode);
+            tail = newNode;
+        }
+        count++;
+    }
+
+    // Function to delete a member by their name
+    void deleteMember(string name) {
+        Node* current = head;
+        Node* prev = nullptr;
+
+        // If the head node itself is the member to be deleted
+        if (current != nullptr && current->getName() == name) {
+            head = current->getNext(); // Change head
+            delete current;
+            count--;
+            cout << name << " has been removed from the club.\n";
+            return;
         }
 
-        void addPresident(string name, int prn){
-            Node* newNode = new Node(name, prn);
-            if(head == nullptr){
-                head = newNode;
-                tail = newNode;
-            }else{
-                newNode->setNext(head);
-                head = newNode;
-            }
-            count++;
+        // Search for the member to be deleted
+        while (current != nullptr && current->getName() != name) {
+            prev = current;
+            current = current->getNext();
         }
 
-        void addSecretary(string name, int prn){
-            Node* newNode = new Node(name, prn);
-            if(head == nullptr){
-                head = newNode;
-                tail = newNode;
-            }else{
-                tail->setNext(newNode);
-                tail = newNode;
-            }
-            count++;
+        // If the member was not found
+        if (current == nullptr) {
+            cout << name << " not found in the club.\n";
+            return;
         }
 
-        void displayMembers(){
-            Node* current = head;
-            while(current){
-                cout << "Name: " << current->getName() << ", PRN: " << current->getPRN() << '\n';
-                current = current->getNext();
-            }
-        }
+        // Unlink the node from the linked list
+        prev->setNext(current->getNext());
+        delete current;
+        count--;
+        cout << name << " has been removed from the club.\n";
+    }
 
-        int getTotalMember(){
-            return count;
+    // Function to display all members
+    void displayMembers() {
+        Node* current = head;
+        while (current) {
+            cout << "Name: " << current->getName() << ", PRN: " << current->getPRN() << '\n';
+            current = current->getNext();
         }
+    }
+
+    // Function to get the total number of members
+    int getTotalMember() {
+        return count;
+    }
 };
 
-void displayMenu(){
+// Function to display the menu
+void displayMenu() {
     cout << "Menu:\n";
     cout << "1. Create New Division\n";
     cout << "2. Add Member\n";
     cout << "3. Add President\n";
-    cout << "4. ADD Secretary\n";
-    cout << "5. Display Members\n";
-    cout << "6. Exit\n";
+    cout << "4. Add Secretary\n";
+    cout << "5. Delete Member\n";
+    cout << "6. Display Members\n";
+    cout << "7. Exit\n";
     cout << "Choose an option: ";
 };
 
-int main(){
+int main() {
     map<int, Club> divisions;
     int choice, divisionID;
     string name;
     int prn;
 
-    do{
+    do {
         displayMenu();
         cin >> choice;
         cout << "\n\n";
-        switch(choice){
-            case 1: 
-                cout << "Enter new Division ID: " << endl;
-                cin >> divisionID;
-                if(divisions.find(divisionID) == divisions.end()){
-                    divisions[divisionID] = Club();
-                    cout << "New division " << divisionID << " created.\n";
-                }else {
-                    cout << "DivisionID already exists.\n";
-                }
-                cout << "\n\n";
-                break;
-            
-            case 2:
-                cout << "Enter division ID: ";
-                cin >> divisionID;
-                if (divisions.find(divisionID) != divisions.end()) {
-                    cout << "Enter name: ";
-                    cin >> name;
-                    cout << "Enter PRN: ";
-                    cin >> prn;
-                    divisions[divisionID].addMember(name, prn);
-                } else {
-                    cout << "Division ID does not exist.\n";
-                }
-                cout << "\n\n";
-                break;
+        switch (choice) {
+        case 1:
+            cout << "Enter new Division ID: " << endl;
+            cin >> divisionID;
+            if (divisions.find(divisionID) == divisions.end()) {
+                divisions[divisionID] = Club();
+                cout << "New division " << divisionID << " created.\n";
+            } else {
+                cout << "DivisionID already exists.\n";
+            }
+            cout << "\n\n";
+            break;
 
-            case 3:
-                cout << "Enter division ID: ";
-                cin >> divisionID;
-                if (divisions.find(divisionID) != divisions.end()) {
-                    cout << "Enter new president's name: ";
-                    cin >> name;
-                    cout << "Enter new president's PRN: ";
-                    cin >> prn;
-                    divisions[divisionID].addPresident(name, prn);
-                } else {
-                    cout << "Division ID does not exist.\n";
-                }
-                cout << "\n\n";
-                break;
+        case 2:
+            cout << "Enter division ID: ";
+            cin >> divisionID;
+            if (divisions.find(divisionID) != divisions.end()) {
+                cout << "Enter name: ";
+                cin >> name;
+                cout << "Enter PRN: ";
+                cin >> prn;
+                divisions[divisionID].addMember(name, prn);
+            } else {
+                cout << "Division ID does not exist.\n";
+            }
+            cout << "\n\n";
+            break;
 
-            case 4:
-                cout << "Enter division ID: ";
-                cin >> divisionID;
-                if (divisions.find(divisionID) != divisions.end()) {
-                    cout << "Enter new secretary's name: ";
-                    cin >> name;
-                    cout << "Enter new secreatary's PRN: ";
-                    cin >> prn;
-                    divisions[divisionID].addSecretary(name, prn);
-                } else {
-                    cout << "Division ID does not exist.\n";
-                }
-                cout << "\n\n";
-                break;
-            case 5:
-                cout << "Enter division ID: ";
-                cin >> divisionID;
-                if (divisions.find(divisionID) != divisions.end()) {
-                    cout << "Division " << divisionID << " members: " << endl;
-                    divisions[divisionID].displayMembers();
-                    cout << "Total club members of Division " << divisionID << ": " << divisions[divisionID].getTotalMember() << endl;
-                } else {
-                    cout << "Division ID does not exist.\n";
-                }
-                cout << "\n\n";
-                break;
+        case 3:
+            cout << "Enter division ID: ";
+            cin >> divisionID;
+            if (divisions.find(divisionID) != divisions.end()) {
+                cout << "Enter new president's name: ";
+                cin >> name;
+                cout << "Enter new president's PRN: ";
+                cin >> prn;
+                divisions[divisionID].addPresident(name, prn);
+            } else {
+                cout << "Division ID does not exist.\n";
+            }
+            cout << "\n\n";
+            break;
 
-            case 6:
-                cout << "Exiting..." << endl;
-                break;
-            default:
-                cout << "Invalid choice! Please try again." << endl;
+        case 4:
+            cout << "Enter division ID: ";
+            cin >> divisionID;
+            if (divisions.find(divisionID) != divisions.end()) {
+                cout << "Enter new secretary's name: ";
+                cin >> name;
+                cout << "Enter new secretary's PRN: ";
+                cin >> prn;
+                divisions[divisionID].addSecretary(name, prn);
+            } else {
+                cout << "Division ID does not exist.\n";
+            }
+            cout << "\n\n";
+            break;
+
+        case 5:
+            cout << "Enter division ID: ";
+            cin >> divisionID;
+            if (divisions.find(divisionID) != divisions.end()) {
+                cout << "Enter name of the member to delete: ";
+                cin >> name;
+                divisions[divisionID].deleteMember(name);
+            } else {
+                cout << "Division ID does not exist.\n";
+            }
+            cout << "\n\n";
+            break;
+
+        case 6:
+            cout << "Enter division ID: ";
+            cin >> divisionID;
+            if (divisions.find(divisionID) != divisions.end()) {
+                cout << "Division " << divisionID << " members: " << endl;
+                divisions[divisionID].displayMembers();
+                cout << "Total club members of Division " << divisionID << ": " << divisions[divisionID].getTotalMember() << endl;
+            } else {
+                cout << "Division ID does not exist.\n";
+            }
+            cout << "\n\n";
+            break;
+
+        case 7:
+            cout << "Exiting...\n";
+            break;
+
+        default:
+            cout << "Invalid choice! Please try again.\n";
         }
-    } while (choice != 6);
-
-
-    // Club d1;
-    // Club d2;
-
-    // d1.addPresident("Vansh", 101);
-    // d1.addMember("swarup", 56);
-    // d1.addMember("sagar", 48);
-    // d1.addMember("raghav", 42);
-    // d1.addSecretary("kaushal", 201);
-
-    // d2.addPresident("harsh", 301);
-    // d2.addMember("aarav", 2);
-    // d2.addMember("daksh", 13);
-    // d2.addMember("ayush", 17);
-    // d2.addSecretary("deepshika", 22);
-
-    // cout << "Division 1 members: " << endl;
-    // d1.displayMembers();
-    // cout << "Total club members of Division 1 is : " << d1.getTotalMember() << endl;
-    // cout << " " << endl;
-
-    // cout << "Division 2 members: " << endl;
-    // d2.displayMembers();
-    // cout << "Total club members of Division 2 is : " << d2.getTotalMember() << endl;
-    // cout << " " << endl;
-
+    } while (choice != 7);
 
     return 0;
 }
+
